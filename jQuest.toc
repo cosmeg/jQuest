@@ -1,0 +1,9 @@
+## Interface: 50001
+## Author: me
+## Title: jQuest
+## Notes: simple quest tracker modifications
+
+## LoadManagers: AddonLoader
+## X-LoadOn-Always: delayed
+
+code.lua
