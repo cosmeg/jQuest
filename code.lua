@@ -3,7 +3,7 @@ local frame = CreateFrame('Frame')
 local lastQuestIndex = -1
 
 function frame.Update(self, event, ...)
-	if ... then print(event .. " (" .. ... .. ")") else print(event) end
+	--if ... then print(event .. " (" .. ... .. ")") else print(event) end
 
 	if event == "QUEST_WATCH_UPDATE" then
 		lastQuestIndex = ...
@@ -13,10 +13,10 @@ function frame.Update(self, event, ...)
 	if ... ~= "player" then return end
 
 	local index = lastQuestIndex
-	print(GetQuestLink(index))
-	print(GetQuestLogTitle(index))
+	--print(GetQuestLink(index))
+	--print(GetQuestLogTitle(index))
 	local _, _, _, _, _, _, isComplete, _, _, _, _ = GetQuestLogTitle(index)
-	print(isComplete)
+	--print(isComplete)
 	if isComplete then RemoveQuestWatch(index) end
 end
 
@@ -24,7 +24,7 @@ end
 -- status is updated
 frame:RegisterEvent("QUEST_WATCH_UPDATE")
 -- this provides different info but fires at the right time!
--- XXX also fires when turning in quests but I don't think I care
+-- XXX also fires when turning in quests but I don't think I care too much
 frame:RegisterEvent("UNIT_QUEST_LOG_CHANGED")
 -- Quixote uses this one w/ quest log scanning (but it requires more things I
 -- don't need)
