@@ -3,7 +3,7 @@ local frame = CreateFrame('Frame')
 local lastQuestIndex = -1
 
 function frame.Update(self, event, ...)
-	--if ... then print(event .. " (" .. ... .. ")") else print(event) end
+	if ... then print(event .. " (" .. ... .. ")") else print(event) end
 
 	if event == "QUEST_WATCH_UPDATE" then
 		lastQuestIndex = ...
@@ -18,6 +18,13 @@ function frame.Update(self, event, ...)
 	local _, _, _, _, _, _, isComplete, _, _, _, _ = GetQuestLogTitle(index)
 	--print(isComplete)
 	if isComplete then RemoveQuestWatch(index) end
+
+	-- this is probably too often
+	-- - do it when I pick up the quest
+	-- - keep track and only do it if I need a new row created
+	-- - somehow hook into the new row creation
+	-- XXX this isn't even soon enough anyway
+	self.StyleWatchFrame()
 end
 
 -- this guy tells us what quest is affected but fires before the completion
@@ -36,15 +43,20 @@ WatchFrame:SetScale(0.9)
 
 local ABF = "Interface\\Addons\\SharedMedia_MyMedia\\fonts\\ABF.ttf"
 local SIZE = 12
-WatchFrameTitle:SetFont(ABF, SIZE)
--- XXX I think this will need to be run (at least) when new quests are tracked
-for i = 1, 50 do
-	line = _G["WatchFrameLine"..i]
-	if line then
-		line.text:SetFont(ABF, SIZE)
-		line.dash:SetFont(ABF, SIZE)
-	else
-		break
+
+function frame.StyleWatchFrame(self)
+	print("StyleWatchFrame")
+	WatchFrameTitle:SetFont(ABF, SIZE)
+	for i = 1, 50 do
+		line = _G["WatchFrameLine"..i]
+		if line then
+			line.text:SetFont(ABF, SIZE)
+			line.dash:SetFont(ABF, SIZE)
+		else
+			break
+		end
 	end
+	WatchFrame_Update()
 end
-WatchFrame_Update()
+
+frame.StyleWatchFrame()
