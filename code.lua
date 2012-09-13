@@ -18,9 +18,9 @@ local oldWFOL = WatchFrame_OnLoad
 local function JQuest_WatchFrame_OnLoad(self)
   print("WatchFrame_OnLoad")
   oldWFOL(self)
-  self:SetScale(0.9)
+  self:SetScale(0.8)
   WatchFrameTitle:SetFont(ABF, FONT_SIZE)
 end
 WatchFrame_OnLoad = JQuest_WatchFrame_OnLoad
-WatchFrame:SetScale(0.9)
+WatchFrame:SetScale(0.8)
 WatchFrameTitle:SetFont(ABF, FONT_SIZE)
