@@ -15,14 +15,14 @@ end)
 hooksecurefunc("WatchFrame_OnLoad", function(self, ...)
   print("WatchFrame_OnLoad")
   self:SetScale(0.8)
-  WatchFrameTitle:SetFont(ABF, TITLE_FONT_LINE)
+  WatchFrameTitle:SetFont(ABF, TITLE_FONT_SIZE)
 end)
 
 
 --- Style existing lines.
 -- TODO remove this if I get the above to load early enough
 WatchFrame:SetScale(0.8)
-WatchFrameTitle:SetFont(ABF, TITLE_FONT_LINE)
+WatchFrameTitle:SetFont(ABF, TITLE_FONT_SIZE)
 for i = 1, 50 do
   line = _G["WatchFrameLine"..i]
   if line then
