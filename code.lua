@@ -1,4 +1,4 @@
-local FONT = "Interface\\Addons\\SharedMedia_MyMedia\\fonts\\Helvetica.ttf"
+local FONT = "Interface\\Addons\\SharedMedia_MyMedia\\fonts\\HelveticaNeueBold.ttf"
 local FONT_SIZE = 12
 local TITLE_FONT_SIZE = 16
 
