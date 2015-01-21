@@ -1,3 +1,6 @@
+local addonName, addon = ...
+
+
 local FONT = "Interface\\Addons\\SharedMedia_MyMedia\\fonts\\HelveticaNeue.ttf"
 local FONT_SIZE = 12
 local TITLE_FONT = "Interface\\Addons\\SharedMedia_MyMedia\\fonts\\HelveticaNeueBold.ttf"
@@ -24,6 +27,8 @@ end
 
 
 function frame:ADDON_LOADED(event, name)
+  if name ~= addonName then return end
+
   self:UnregisterEvent("ADDON_LOADED")
 
   styleTracker()
