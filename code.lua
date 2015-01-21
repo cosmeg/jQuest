@@ -3,8 +3,14 @@ local FONT_SIZE = 12
 local TITLE_FONT = "Interface\\Addons\\SharedMedia_MyMedia\\fonts\\HelveticaNeueBold.ttf"
 local TITLE_FONT_SIZE = 14
 
+
+local frame = CreateFrame("Frame")
+frame:SetScript("OnEvent", function(self, event, ...)
+  if self[event] then return self[event](self, event, ...) end
+end)
+
+
 local function styleBlock(block)
-  --print(block.HeaderText:GetText())
   block.HeaderText:SetFont(FONT, FONT_SIZE)
   block.currentLine.Text:SetFont(FONT, FONT_SIZE)
 end
@@ -17,19 +23,24 @@ local function styleTracker()
 end
 
 
-hooksecurefunc("ObjectiveTracker_AddBlock", function(block, ...)
-  styleBlock(block)
-end)
+function frame:ADDON_LOADED(event, name)
+  self:UnregisterEvent("ADDON_LOADED")
 
-
-hooksecurefunc("ObjectiveTracker_OnLoad", function(self, ...)
   styleTracker()
-end)
+  local block = QUEST_TRACKER_MODULE.firstBlock
+  while (block) do
+    styleBlock(block)
+    block = block.nextBlock
+  end
 
+  hooksecurefunc("ObjectiveTracker_AddBlock", function(block, ...)
+    styleBlock(block)
+  end)
 
-styleTracker()
-local block = QUEST_TRACKER_MODULE.firstBlock
-while (block) do
-  styleBlock(block)
-  block = block.nextBlock
+  hooksecurefunc("ObjectiveTracker_OnLoad", function(self, ...)
+    styleTracker()
+  end)
 end
+
+
+frame:RegisterEvent("ADDON_LOADED")
