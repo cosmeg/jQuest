@@ -1,4 +1,4 @@
-## Interface: 60000
+## Interface: 60100
 ## Author: me
 ## Title: jQuest
 ## Notes: simple quest tracker modifications

@@ -14,15 +14,43 @@ end)
 
 
 local function styleBlock(block)
-  block.HeaderText:SetFont(FONT, FONT_SIZE)
-  block.currentLine.Text:SetFont(FONT, FONT_SIZE)
+  -- TODO handle more block types
+  if block.HeaderText then
+    block.HeaderText:SetFont(FONT, FONT_SIZE)
+  end
+  if block.currentLine then
+    block.currentLine.Text:SetFont(FONT, FONT_SIZE)
+  end
 end
 
 
 local function styleTracker()
-  QUEST_TRACKER_MODULE.Header.Text:SetFont(TITLE_FONT, TITLE_FONT_SIZE)
   ObjectiveTrackerFrame:SetScale(0.8)
-  QUEST_TRACKER_MODULE.Header.Background:Hide()
+  for i, m in ipairs(ObjectiveTrackerFrame.MODULES) do
+    m.Header.Background:Hide()
+    m.Header.Text:SetFont(TITLE_FONT, TITLE_FONT_SIZE)
+  end
+  ScenarioStageBlock.FinalBG:Hide()
+  ScenarioStageBlock.NormalBG:Hide()
+  ScenarioStageBlock.CompleteLabel:SetFont(FONT, FONT_SIZE)
+  ScenarioStageBlock.Stage:SetFont(FONT, FONT_SIZE)
+  ScenarioStageBlock.Name:SetFont(FONT, FONT_SIZE)
+end
+
+
+-- make quest poi buttons semi-transparent
+-- XXX this isn't getting called
+local function FadePOIButton(parent, onCreateFunc)
+  --[[
+  -- from blizz code
+  local buttonName = "poi"..parentName..buttonType.."_"..buttonIndex;
+  _G[buttonName]:SetAlpha(0.5)
+  if QUEST_POI_SWAP_BUTTONS[parentName] then
+    QUEST_POI_SWAP_BUTTONS[parentName]:SetAlpha(0.5)
+  end
+  ]]
+  print("FadePOIButton")
+  parent:SetAlpha(0.5)
 end
 
 
@@ -45,6 +73,8 @@ function frame:ADDON_LOADED(event, name)
   hooksecurefunc("ObjectiveTracker_OnLoad", function(self, ...)
     styleTracker()
   end)
+
+  hooksecurefunc("QuestPOI_Initialize", FadePOIButton)
 end
 
 
