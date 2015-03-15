@@ -75,6 +75,28 @@ function frame:ADDON_LOADED(event, name)
   end)
 
   hooksecurefunc("QuestPOI_Initialize", FadePOIButton)
+
+  -- this guy tells us what quest is affected but fires before the completion
+  -- status is updated
+  frame:RegisterEvent("QUEST_WATCH_UPDATE")
+  -- this provides different info but fires at the right time!
+  -- also fires when turning in quests but I don't think I care too much
+  frame:RegisterEvent("UNIT_QUEST_LOG_CHANGED")
+end
+
+
+local lastQuestIndex = -1
+function frame:QUEST_WATCH_UPDATE(event, questIndex)
+  lastQuestIndex = questIndex
+end
+
+
+function frame:UNIT_QUEST_LOG_CHANGED(event, unitID)
+  if unitID ~= "player" then return end
+  local index = lastQuestIndex
+  local _, _, _, _, _, isComplete, _, _, _, _, _, _, _, _ =
+    GetQuestLogTitle(index)
+  if isComplete == 1 then RemoveQuestWatch(index) end
 end
 
 
