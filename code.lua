@@ -19,7 +19,9 @@ local function styleBlock(block)
     block.HeaderText:SetFont(FONT, FONT_SIZE)
   end
   if block.currentLine then
-    block.currentLine.Text:SetFont(FONT, FONT_SIZE)
+    if block.currentLine.Text then
+      block.currentLine.Text:SetFont(FONT, FONT_SIZE)
+    end
   end
 end
 
